@@ -18,6 +18,31 @@ const TRAIL_ITEMS = [
   { id: 'lift-lid-cup', name: 'Lift-Lip Cup' },
 ]
 
+function TrailSlide({ item }) {
+  return (
+    <div key={item.id}>
+      <img
+        src={`/${item.id}.svg`}
+        alt={item.name}
+        style={{
+          width: '100%',
+          height: '280px',
+          objectFit: 'contain',
+          borderRadius: 2,
+          margin: '0 auto',
+          display: 'block',
+          padding: 16,
+        }}
+      />
+      <Box sx={{ textAlign: 'center', mt: 1 }}>
+        <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#2B2B2B' }}>
+          {item.name}
+        </Typography>
+      </Box>
+    </div>
+  )
+}
+
 export default function TrailCarousel() {
   return (
     <Box sx={{ width: '100%', mx: 'auto' }}>
@@ -30,26 +55,7 @@ export default function TrailCarousel() {
         disableKeyboardHandling
       >
         {TRAIL_ITEMS.map((item) => (
-          <div key={item.id}>
-            <img
-              src={`/${item.id}.svg`}
-              alt={item.name}
-              sx={{
-                width: '100%',
-                height: '280px',
-                objectFit: 'contain',
-                borderRadius: 2,
-                mx: 'auto',
-                display: 'block',
-                padding: 16,
-              }}
-            />
-            <Box sx={{ textAlign: 'center', mt: 1 }}>
-              <Typography variant="subtitle1" sx={{ fontWeight: 600, color: '#2B2B2B' }}>
-                {item.name}
-              </Typography>
-            </Box>
-          </div>
+          <TrailSlide key={item.id} item={item} />
         ))}
       </Carousel>
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'center', mt: 1 }}>
