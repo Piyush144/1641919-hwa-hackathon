@@ -55,9 +55,14 @@ export default function Navbar() {
       >
         <Toolbar sx={{ px: 2, minHeight: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
-            <Link component={RouterLink} to="/" underline="none" sx={{ color: 'inherit', textDecoration: 'none', fontWeight: 700, fontSize: '1.25rem', letterSpacing: '-0.5px', fontFamily: 'Freda, serif' }}>
+            <Typography
+              component={RouterLink}
+              to="/"
+              variant="h6"
+              sx={{ color: 'inherit', textDecoration: 'none', fontWeight: 700, fontSize: '1.25rem', letterSpacing: '-0.5px', fontFamily: 'Freda, serif' }}
+            >
               Treasure Trail
-            </Link>
+            </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
