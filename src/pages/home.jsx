@@ -121,7 +121,9 @@ export default function Home() {
         </Box>
         <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50' }}>
           <Typography variant="h6" sx={{ mb: 2, textAlign: 'center' }}>Your dog's trail</Typography>
-          <TrailCarousel />
+          <Box sx={{ maxWidth: 320, mx: 'auto' }}>
+            <TrailCarousel />
+          </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center', maxWidth: 500, mx: 'auto' }}>
             Snap-together silicone tiles wind into a trail&#8212;hide treats, let your dog sniff, dig, and hunt.
           </Typography>

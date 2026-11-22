@@ -13,27 +13,31 @@ const TRAIL_ITEMS = [
 ]
 
 export default function TrailCarousel() {
-  const [index, setIndex] = React.useState(0)
-  const perView = 3
-  const maxIndex = Math.max(0, TRAIL_ITEMS.length - perView)
-  const pageCount = maxIndex + 1
+  const [activeIndex, setActiveIndex] = React.useState(0)
 
-  const prev = () => setIndex((i) => Math.max(0, i - 1))
-  const next = () => setIndex((i) => Math.min(maxIndex, i + 1))
-  const goTo = (i) => setIndex(i)
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveIndex((i) => (i + 1) % TRAIL_ITEMS.length)
+    }, 2000)
+    return () => clearInterval(timer)
+  }, [])
+
+  const prev = () => setActiveIndex((i) => (i - 1 + TRAIL_ITEMS.length) % TRAIL_ITEMS.length)
+  const next = () => setActiveIndex((i) => (i + 1) % TRAIL_ITEMS.length)
 
   return (
     <Box sx={{ position: 'relative', width: '100%', mx: 'auto' }}>
+      {/* Centered image strip — always centered, never left-stacked */}
       <Box
         sx={{
-          overflowX: 'auto',
-          scrollbarWidth: 'none',
-          '&::-webkit-scrollbar': { display: 'none' },
           display: 'flex',
+          flexDirection: 'row',
           alignItems: 'center',
           gap: 1,
-          pb: 2,
+          justifyContent: 'center',
           minWidth: 'max-content',
+          mx: 'auto',
+          pb: 2,
         }}
       >
         {TRAIL_ITEMS.map((item, i) => (
@@ -44,11 +48,24 @@ export default function TrailCarousel() {
               display: 'flex',
               alignItems: 'center',
               gap: 0.5,
-              opacity: i >= index && i < index + perView ? 1 : 0.45,
-              transition: 'opacity 0.3s ease',
+              opacity: i === activeIndex ? 1 : 0.5,
+              transition: 'opacity 0.3s ease, transform 0.3s ease',
+              transform: i === activeIndex ? 'scale(1.05)' : 'scale(1)',
             }}
           >
-            <img src={`/${item.id}.svg`} alt={item.name} sx={{ width: 64, height: 64, objectFit: 'contain' }} />
+            <img
+              src={`/${item.id}.svg`}
+              alt={item.name}
+              sx={{
+                width: 75,
+                height: 75,
+                minWidth: 75,
+                minHeight: 75,
+                objectFit: 'contain',
+                borderRadius: 2,
+                filter: i === activeIndex ? 'drop-shadow(0 4px 8px rgba(47,93,80,0.35))' : 'none',
+              }}
+            />
             {i < TRAIL_ITEMS.length - 1 && (
               <Box sx={{ width: 10, height: 1, bgColor: '#2F5D50' }} />
             )}
@@ -59,20 +76,19 @@ export default function TrailCarousel() {
         <IconButton
           size="small"
           onClick={prev}
-          disabled={index === 0}
-          sx={{ color: index === 0 ? 'text.secondary' : '#2F5D50', bgcolor: 'rgba(47,93,80,0.08)', borderRadius: 2 }}
+          sx={{ color: '#2F5D50', bgcolor: 'rgba(47,93,80,0.08)', borderRadius: 2 }}
         >
           <ArrowLeftIcon fontSize="small" />
         </IconButton>
         <Box sx={{ display: 'flex', gap: 0.5 }}>
-          {[...Array(pageCount)].map((_, dotIndex) => {
-            const active = index === dotIndex
+          {TRAIL_ITEMS.map((_, dotIndex) => {
+            const active = activeIndex === dotIndex
             return (
               <Button
                 key={dotIndex}
                 size="small"
                 variant="text"
-                onClick={() => goTo(dotIndex)}
+                onClick={() => setActiveIndex(dotIndex)}
                 sx={{
                   p: 0.5,
                   minWidth: 28,
@@ -93,8 +109,7 @@ export default function TrailCarousel() {
         <IconButton
           size="small"
           onClick={next}
-          disabled={index === maxIndex}
-          sx={{ color: index === maxIndex ? 'text.secondary' : '#2F5D50', bgcolor: 'rgba(47,93,80,0.08)', borderRadius: 2 }}
+          sx={{ color: '#2F5D50', bgcolor: 'rgba(47,93,80,0.08)', borderRadius: 2 }}
         >
           <ArrowRightIcon fontSize="small" />
         </IconButton>
