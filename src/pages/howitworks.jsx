@@ -59,6 +59,15 @@ export default function HowItWorks() {
   const [open, setOpen] = React.useState(false)
   const [msg, setMsg] = React.useState(null)
   const [form, setForm] = React.useState({ name: '', email: '', message: '' })
+  const [reviews, setReviews] = React.useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('treasure-trail-reviews') || '[]')
+    } catch {
+      return []
+    }
+  })
+  const [reviewForm, setReviewForm] = React.useState({ name: '', rating: 5, comment: '' })
+  const [reviewMsg, setReviewMsg] = React.useState(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -71,6 +80,31 @@ export default function HowItWorks() {
     setOpen(true)
     setForm({ name: '', email: '', message: '' })
   }
+
+  const handleReviewSubmit = (e) => {
+    e.preventDefault()
+    if (!reviewForm.name || !reviewForm.comment) {
+      setReviewMsg({ ok: false, text: 'Please fill in name and comment.' })
+      return
+    }
+    const newReview = {
+      id: Date.now().toString(),
+      name: reviewForm.name,
+      rating: reviewForm.rating,
+      comment: reviewForm.comment,
+      date: new Date().toISOString(),
+    }
+    setReviews((prev) => [newReview, ...prev])
+    try {
+      localStorage.setItem('treasure-trail-reviews', JSON.stringify([newReview, ...reviews]))
+    } catch {
+      // ignore
+    }
+    setReviewMsg({ ok: true, text: 'Thanks for your review!' })
+    setReviewForm({ name: '', rating: 5, comment: '' })
+  }
+
+  const stars = (n) => [1, 2, 3, 4, 5].map((s) => (s <= n ? '★' : '☆')).join('')
 
   return (
     <Box sx={{ bgColor: 'background.default', minHeight: '100vh', py: 4 }}>
@@ -160,6 +194,96 @@ export default function HowItWorks() {
             </AccordionDetails>
           </Accordion>
         ))}
+
+        {/* Customer reviews */}
+        <SectionTitle sx={{ mt: 6 }}>Customer reviews</SectionTitle>
+        <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', borderRadius: 3 }}>
+          <CardContent>
+            {reviews.length === 0 ? (
+                <Typography variant="body2" color="text.secondary">
+                  No reviews yet. Be the first to share your experience!
+                </Typography>
+            ) : (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {reviews.map((r) => (
+                  <Box key={r.id} sx={{ pb: 2, borderBottom: '1px solid #E5DDCE' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                      <Typography variant="subtitle2" fontWeight="600">
+                        {r.name}
+                      </Typography>
+                      <Typography variant="caption" color="secondary">
+                        {new Date(r.date).toLocaleDateString()}
+                      </Typography>
+                    </Box>
+                    <Typography variant="caption" color="secondary">
+                      {stars(r.rating)}
+                    </Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mt: 0.5 }}>
+                      {r.comment}
+                    </Typography>
+                  </Box>
+                ))}
+              </Box>
+            )}
+            <Box sx={{ mt: 4, borderTop: '1px solid #E5DDCE', pt: 2 }}>
+              <Typography variant="subtitle2" fontWeight="600" sx={{ mb: 1 }}>
+                Leave a review
+              </Typography>
+              <form onSubmit={handleReviewSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 1.5 }}>
+                <TextField
+                  label="Your name"
+                  value={reviewForm.name}
+                  onChange={(e) => setReviewForm({ ...reviewForm, name: e.target.value })}
+                  required
+                  fullWidth
+                  size="small"
+                />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Typography variant="caption" sx={{ width: 60 }}>
+                    Rating
+                  </Typography>
+                  {[5, 4, 3, 2, 1].map((s) => (
+                    <Button
+                      key={s}
+                      size="small"
+                      variant="text"
+                      onClick={() => setReviewForm({ ...reviewForm, rating: s })}
+                      sx={{
+                        color: s <= reviewForm.rating ? '#E0A526' : 'text.secondary',
+                        '&:hover': { color: '#E0A526' },
+                        px: 0.5,
+                      }}
+                    >
+                      {s <= reviewForm.rating ? '★' : '☆'}
+                    </Button>
+                  ))}
+                </Box>
+                <TextField
+                  label="Your review"
+                  value={reviewForm.comment}
+                  onChange={(e) => setReviewForm({ ...reviewForm, comment: e.target.value })}
+                  multiline
+                  rows={3}
+                  required
+                  fullWidth
+                  size="small"
+                />
+                <Button
+                  type="submit"
+                  variant="contained"
+                  sx={{ borderRadius: '999px', textTransform: 'none', bgcolor: '#2F5D50', color: 'white', '&:hover': { bgcolor: '#274d42' } }}
+                >
+                  Submit review
+                </Button>
+              </form>
+              {reviewMsg && (
+                <Alert severity={reviewMsg.ok ? 'success' : 'error'} sx={{ mt: 1 }}>
+                  {reviewMsg.text}
+                </Alert>
+              )}
+            </Box>
+          </CardContent>
+        </Card>
 
         {/* Contact */}
         <SectionTitle sx={{ mt: 6 }}>Contact us</SectionTitle>

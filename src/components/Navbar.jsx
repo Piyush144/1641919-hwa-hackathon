@@ -12,17 +12,21 @@ import {
   ListItemButton,
   ListItemText,
   Badge,
+  Switch,
+  FormControlLabel,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCart from '@mui/icons-material/ShoppingCart'
 import PawIcon from '@mui/icons-material/Pets'
+import Brightness4Icon from '@mui/icons-material/Brightness4'
+import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { useCart } from '../context/CartContext'
 import { Link as RouterLink } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const drawerWidth = 260
 
-export default function Navbar() {
+export default function Navbar({ toggleDarkMode, darkMode }) {
   const { itemCount } = useCart()
   const location = useLocation()
   const navigate = useNavigate()
@@ -92,6 +96,12 @@ export default function Navbar() {
             ))}
           </Box>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <FormControlLabel
+              control={<Switch size="small" checked={darkMode === 'dark'} onChange={toggleDarkMode} />}
+              label={darkMode === 'dark' ? 'Dark' : 'Light'}
+              labelPlacement="start"
+              sx={{ ml: 1, mr: 1 }}
+            />
             <IconButton
               component={RouterLink}
               to="/cart"

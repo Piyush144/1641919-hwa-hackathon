@@ -152,6 +152,17 @@ Also heck: quick -> add to car: refresh the page and confirm the cart persists, 
 Make sure no console error or warnings, no dead links or buttons, and that "nam run build " success. List what you fixed
 
 
+Bonus
+
+Order tracking page: "Add /track where a user enters an order id and sees a status timeline (placed, packed, shipped, delivered) read from localStorage."
+
+Dark mode toggle: "Add a light/dark toggle in the nabber that saves to local storage.
+Printable level cards: on the quiz result, add a download card button that opens a print-friendly view of the layout.
+Dog name personalisation: add an optional dog name field to the quiz and use it in the result, eg bruno'd hunt for today"
+Wishlist or reviews from: let users add a review, saved to local storage
+
+
+
 
 
 

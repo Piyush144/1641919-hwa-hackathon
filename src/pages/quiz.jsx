@@ -15,6 +15,8 @@ import {
   StepLabel,
   LinearProgress,
   Chip,
+  TextField,
+  Alert,
 } from '@mui/material'
 import { generateHunt } from '../utils/quizEngine'
 import { SIZES } from '../data/products'
@@ -65,6 +67,7 @@ export default function Quiz() {
   const { addItem } = useCart()
   const [current, setCurrent] = React.useState(0)
   const [answers, setAnswers] = React.useState({})
+  const [dogName, setDogName] = React.useState('')
   const [result, setResult] = React.useState(null)
   const [snackOpen, setSnackOpen] = React.useState(false)
 
@@ -83,7 +86,7 @@ export default function Quiz() {
         food: answers.food,
         duration: answers.duration,
       })
-      setResult(hunt)
+      setResult({ ...hunt, dogName })
       setCurrent(current + 1)
     } else {
       setCurrent(current + 1)
@@ -101,7 +104,7 @@ export default function Quiz() {
       food: answers.food,
       duration: answers.duration,
     })
-    setResult(hunt)
+    setResult({ ...hunt, dogName })
   }
 
   const handleAddKitToCart = () => {
@@ -109,11 +112,44 @@ export default function Quiz() {
     setSnackOpen(true)
   }
 
+  const handlePrint = () => {
+    const printWindow = window.open('', '', 'width=600,height=800')
+    const tilesHtml = result.tiles.map((t) => `<li>${t.name}</li>`).join('')
+    const stepsHtml = result.hidingSteps.map((s) => `<li>${s}</li>`).join('')
+    printWindow.document.write(`
+      <html>
+      <head>
+        <title>${dogName ? dogName + "'s" : "Your"} Hunt Level Card</title>
+        <style>
+          body { font-family: Inter, sans-serif; padding: 2rem; color: #2B2B2B; }
+          h1 { font-family: Freda, serif; color: #2F5D50; }
+          .card { border: 2px solid #2F5D50; border-radius: 16px; padding: 1.5rem; max-width: 500px; margin: 0 auto; }
+          ul { padding-left: 1.2rem; }
+          @media print { body { padding: 0; } .card { border: 2px solid #000; } }
+        </style>
+      </head>
+      <body onload="window.print(); window.close()">
+        <div class="card">
+          <h1>${dogName ? dogName + "'s" : "Your"} Hunt Level Card</h1>
+          <p><strong>Level:</strong> ${result.level} &bull; <strong>${result.title}</strong></p>
+          <p><strong>Estimated time:</strong> ${result.estimatedMinutes} minutes</p>
+          <h3>Ordered tiles</h3>
+          <ul>${tilesHtml}</ul>
+          <h3>Hiding steps</h3>
+          <ol>${stepsHtml}</ol>
+        </div>
+      </body>
+      </html>
+    `)
+    printWindow.document.close()
+  }
+
   if (result && current >= QUESTIONS.length) {
+    const displayName = dogName ? `${dogName}'s` : "Your"
     return (
       <Box sx={{ bgColor: 'background.default', minHeight: '100vh', py: 4 }}>
         <Container maxWidth="md">
-          <SectionTitle>Your trail level</SectionTitle>
+          <SectionTitle>${displayName} trail level</SectionTitle>
           <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', borderRadius: 3 }}>
             <CardContent>
               <Typography variant="h5">{result.title}</Typography>
@@ -150,7 +186,10 @@ export default function Quiz() {
             <Button variant="contained" onClick={handleAddKitToCart} sx={{ borderRadius: '999px', textTransform: 'none', bgcolor: '#2F5D50', color: 'white', '&:hover': { bgcolor: '#274d42' } }}>
               Add the starter kit to cart
             </Button>
-            <Button variant="text" onClick={() => { setResult(null); setCurrent(0); setAnswers({}); }} sx={{ borderRadius: '999px', textTransform: 'none', color: '#6B6B6B', '&:hover': { color: '#2B2B2B' } }}>
+            <Button variant="outlined" onClick={handlePrint} sx={{ borderRadius: '999px', textTransform: 'none', color: '#2F5D50', borderColor: '#2F5D50' }}>
+              Download level card
+            </Button>
+            <Button variant="text" onClick={() => { setResult(null); setCurrent(0); setAnswers({}); setDogName(''); }} sx={{ borderRadius: '999px', textTransform: 'none', color: '#6B6B6B', '&:hover': { color: '#2B2B2B' } }}>
               Start Over
             </Button>
           </Box>
@@ -158,6 +197,8 @@ export default function Quiz() {
       </Box>
     )
   }
+
+  const showDogName = current === 0
 
   return (
     <Box sx={{ bgColor: 'background.default', minHeight: '100vh', py: 4 }}>
@@ -172,6 +213,23 @@ export default function Quiz() {
           </Stepper>
           <LinearProgress variant="determinate" value={((current) / QUESTIONS.length) * 100} sx={{ height: 4, borderRadius: 2 }} />
         </Box>
+        {showDogName && (
+          <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', borderRadius: 3, mb: 4 }}>
+            <CardContent>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+                Optional: tell us your dog&#39;s name so we can personalise the result.
+              </Typography>
+              <TextField
+                label="Dog's name"
+                value={dogName}
+                onChange={(e) => setDogName(e.target.value)}
+                placeholder="e.g. Bruno"
+                fullWidth
+                size="small"
+              />
+            </CardContent>
+          </Card>
+        )}
         <Typography variant="h6" component="h2" gutterBottom sx={{ fontFamily: 'Freda, serif', mb: 4 }}>
           Question {current + 1} of {QUESTIONS.length}
         </Typography>
