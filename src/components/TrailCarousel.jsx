@@ -14,82 +14,139 @@ const TRAIL_ITEMS = [
 
 export default function TrailCarousel() {
   const [activeIndex, setActiveIndex] = React.useState(0)
+  const [containerWidth, setContainerWidth] = React.useState(0)
 
+  const containerRef = React.useRef(null)
+
+  // Responsive tile count: mobile 1, tablet 2, desktop 3
+  const tilesPerView = React.useMemo(() => {
+    if (containerWidth < 600) return 1
+    if (containerWidth < 900) return 2
+    return 3
+  }, [containerWidth])
+
+  const gap = 16 // matches the gap used between tiles
+
+  const maxIndex = React.useMemo(() => Math.max(0, TRAIL_ITEMS.length - tilesPerView), [TRAIL_ITEMS.length, tilesPerView])
+
+  // Clamp activeIndex whenever tile count changes
+  React.useEffect(() => {
+    if (activeIndex > maxIndex) {
+      setActiveIndex(maxIndex)
+    }
+  }, [activeIndex, maxIndex])
+
+  // ResizeObserver to measure actual viewport width
+  React.useEffect(() => {
+    const el = containerRef.current
+    if (!el) return
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentRect.width || entry.borderBoxSize?.[0]?.inlineSize || 0)
+      }
+    })
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  // Auto-rotate every 2 seconds
   React.useEffect(() => {
     const timer = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % TRAIL_ITEMS.length)
+      setActiveIndex((i) => (i >= maxIndex ? 0 : i + 1))
     }, 2000)
     return () => clearInterval(timer)
-  }, [])
+  }, [maxIndex])
 
-  const prev = () => setActiveIndex((i) => (i - 1 + TRAIL_ITEMS.length) % TRAIL_ITEMS.length)
-  const next = () => setActiveIndex((i) => (i + 1) % TRAIL_ITEMS.length)
+  const prev = () => {
+    setActiveIndex((i) => (i === 0 ? maxIndex : i - 1))
+  }
 
-  // Number of tiles visible at once based on screen width
-  const tilesPerView = React.useMemo(() => {
-    if (typeof window === 'undefined') return 3
-    const w = window.innerWidth
-    if (w < 600) return 1
-    if (w < 900) return 2
-    return 3
-  }, [])
+  const next = () => {
+    setActiveIndex((i) => (i >= maxIndex ? 0 : i + 1))
+  }
 
-  const maxIndex = Math.max(0, TRAIL_ITEMS.length - tilesPerView)
+  const goTo = (index) => {
+    setActiveIndex(index)
+  }
+
+  // Tile width computed from actual measured viewport width
+  const tileWidth = containerWidth > 0 ? (containerWidth - gap * (tilesPerView - 1)) / tilesPerView : 0
+
+  // Horizontal offset based on active index
+  const offset = activeIndex > 0 ? -(activeIndex * (tileWidth + gap)) : 0
 
   return (
     <Box sx={{ position: 'relative', width: '100%', mx: 'auto' }}>
-      {/* Centered track — slides never spill out of parent */}
+      {/* Viewport: clipping boundary, overflow hidden */}
       <Box
+        ref={containerRef}
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          gap: 1.5,
-          justifyContent: 'center',
-          minWidth: 'max-content',
-          mx: 'auto',
-          pb: 2,
+          width: '100%',
           overflowX: 'hidden',
+          minWidth: 0,
+          pb: 2,
+          position: 'relative',
         }}
       >
-        {TRAIL_ITEMS.map((item, i) => (
-          <Box
-            key={item.id}
-            sx={{
-              flexShrink: 0,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              opacity: i === activeIndex ? 1 : 0.55,
-              transition: 'opacity 0.35s ease, transform 0.35s ease',
-              transform: i === activeIndex ? 'scale(1.06)' : 'scale(1)',
-              width: 200,
-              minWidth: 200,
-            }}
-          >
-            <img
-              src={`/${item.id}.svg`}
-              alt={item.name}
+        {/* Track: single horizontal row, moves with translateX */}
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            flexWrap: 'nowrap',
+            gap: gap,
+            alignItems: 'center',
+            transform: `translateX(${offset}px)`,
+            transition: 'transform 450ms ease',
+            minWidth: 'max-content',
+          }}
+        >
+          {TRAIL_ITEMS.map((item, i) => (
+            <Box
+              key={item.id}
               sx={{
-                width: '100%',
-                height: 'auto',
-                minHeight: 200,
-                maxHeight: 200,
-                objectFit: 'contain',
-                borderRadius: 2,
-                mx: 'auto',
-                display: 'block',
-                filter: i === activeIndex ? 'drop-shadow(0 6px 16px rgba(47,93,80,0.4))' : 'none',
+                flexShrink: 0,
+                width: tileWidth,
+                minWidth: tileWidth,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                opacity: i === activeIndex ? 1 : 0.55,
+                transition: 'opacity 0.35s ease, transform 0.35s ease',
+                transform: i === activeIndex ? 'scale(1.06)' : 'scale(1)',
               }}
-            />
-          </Box>
-        ))}
+            >
+              <img
+                src={`/${item.id}.svg`}
+                alt={item.name}
+                sx={{
+                  width: '100%',
+                  height: 'auto',
+                  minHeight: 200,
+                  maxHeight: 200,
+                  objectFit: 'contain',
+                  borderRadius: 2,
+                  mx: 'auto',
+                  display: 'block',
+                  filter: i === activeIndex ? 'drop-shadow(0 6px 16px rgba(47,93,80,0.4))' : 'none',
+                }}
+              />
+            </Box>
+          ))}
+        </Box>
       </Box>
+      {/* Navigation: arrows + numbered pagination */}
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 1.5, mt: 1.5 }}>
         <IconButton
           size="small"
           onClick={prev}
-          sx={{ color: '#2F5D50', bgcolor: 'rgba(47,93,80,0.1)', borderRadius: 2, p: 1 }}
+          disabled={activeIndex === 0}
+          sx={{
+            color: activeIndex === 0 ? 'text.secondary' : '#2F5D50',
+            bgcolor: activeIndex === 0 ? 'rgba(47,93,80,0.08)' : 'rgba(47,93,80,0.1)',
+            borderRadius: 2,
+            p: 1,
+          }}
         >
           <ArrowLeftIcon fontSize="small" />
         </IconButton>
@@ -101,7 +158,7 @@ export default function TrailCarousel() {
                 key={dotIndex}
                 size="small"
                 variant="text"
-                onClick={() => setActiveIndex(dotIndex)}
+                onClick={() => goTo(dotIndex)}
                 sx={{
                   p: 0.5,
                   minWidth: 30,
@@ -123,7 +180,13 @@ export default function TrailCarousel() {
         <IconButton
           size="small"
           onClick={next}
-          sx={{ color: '#2F5D50', bgcolor: 'rgba(47,93,80,0.1)', borderRadius: 2, p: 1 }}
+          disabled={activeIndex >= maxIndex}
+          sx={{
+            color: activeIndex >= maxIndex ? 'text.secondary' : '#2F5D50',
+            bgcolor: activeIndex >= maxIndex ? 'rgba(47,93,80,0.08)' : 'rgba(47,93,80,0.1)',
+            borderRadius: 2,
+            p: 1,
+          }}
         >
           <ArrowRightIcon fontSize="small" />
         </IconButton>

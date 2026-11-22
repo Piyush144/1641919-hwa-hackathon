@@ -163,11 +163,54 @@ Wishlist or reviews from: let users add a review, saved to local storage
 
 
 
+Task: Fix and restructure the existing react carousel
 
+I need you to fix the existing carousel implementation. The current arousel has horizontal alignment, overflow, positioning and responsive layout issues. Do no apply superficial css fixes such as arbitrary margins, left offsets or manual transactions to compensate for incorrect positioning. Instead, inspect the existing implementation and restructure the carousel using proper viewport-and-track architecture.
 
+1. Separate the viewport and track
+  
+  Implement two distinct container:
 
+   Viewport: 
+	occupies 100% of the available parent width. Has overflow:hidden, hasmiwidth:0 to prevent flex/grid overflow. Acts as the clipping boundary for the carousel.
 
+  Track: contain all carousel items in a single horizontal row. Uses display: flex and flexWrap: nowrpa. Has content-based wit=dth rather than being constrained to the viewport. Moves horizontally using css translateX. Has smooth transform transition.
 
+The track must never determine the width or positioning of the parent viewport. 
+
+2. Implement actual carousel movement.
+
+The existing implementation only changes the opacity and scale of the active tile. It doesn't actually move the carousel.
+
+ Implement genuine horizontal sliding.
+
+ Calculate the horizontal offset based on active index, tile width and gap. Apply the offset using transform: tranlateX(). Use a smooth transition of approximately 4--500ms. Ensure navigation updates the active tile and the track position together. 
+
+3. Implement responsive tile sizing.
+
+ The number of visible tiles should adapt to the screen size: desktop 3 tiles, tablet 2tiles, and mobile 1. Calculate the tile width dynamically:
+tileWidth = (vuewportwidth - totakGapwidth)/tilePerView
+Do not barcode a fixed with for all screen sizes.
+
+4. Measure the actual carousel container
+Do no rely exclusively on window.innerWidth to determine tile dimensions. Use resize observer on the actual carousel viewport to measure its available width. Recalculate tile widths and horizontal offsets whenever the viewport changes size. Clean up the observer when the component unmounts.
+
+5. Correct active Index and boundary calculations
+  Ensure the active tile remains visible.
+
+ Centre the active tile within the visible area whenever possible. At the beginning and end of the carousel, prevent the track from moving beyond its boundaries. Ensure the last tile can be accessed. Handle the change in the number if visible tiles without producing invalid offsets.
+
+6. Present existing functionality.
+Keep all existing functionality: previous and next arrows buttons, numbered pagination, actuivae pagination styling, automatic rotation, active tile opacity and scale effects, smooth transitions, existing svg assets. The automatic rotation should continue cycling through all items without crating multiple intervals or memory leaks
+
+7. Preset the virtual design
+Do no redesign the carousel, keep the esxisting colour palette, typography, isslutrations and sig assets, border radius, shadows, space aesthetics, pagination appearance, overall visual identity.  Only modi the layout architecture and css react logic necessary to fix carousel.
+
+Acceptance criteria
+Before considering the task complete, verify:
+
+1. The first tile is correctly positioned without excessive empt space on left. Three tiles are visible on desktop, two tiles are visible on tables, one tile is visible on mobile, no unintended horizontal overflow occurs, . Clicking any pagination numbers displays the corresponding active tile. Previous and next buttons work correctly, the last tile is accessible without going the track beyond it sbounbdaries. Automatic rotation works fine, resizing observer recalculates the tile dimensions correctly and carousel remains correctly aligned inside its existing
+Parent container
 
 
 
