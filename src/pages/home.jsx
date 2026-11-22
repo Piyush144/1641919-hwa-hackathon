@@ -43,7 +43,7 @@ const PROBLEM_CARDS = [
   },
   {
     title: 'Over before you leave',
-    text: 'Gulped down in 60 seconds&#8212;no sniffing, no thinking, just empty calories.',
+    text: 'Gulped down in 60 seconds;no sniffing, no thinking, just empty calories.',
   },
   {
     title: 'Hard to clean',

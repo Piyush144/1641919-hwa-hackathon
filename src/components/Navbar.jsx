@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemText,
   Badge,
+  Divider,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCart from '@mui/icons-material/ShoppingCart'
@@ -108,15 +109,32 @@ export default function Navbar() {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
+          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', bgcolor: '#f3f7f5' },
         }}
       >
-        <Toolbar>
-          <Typography variant="h6" sx={{ fontFamily: 'Freda, serif', ml: 2, mr: 'auto' }}>
+        <Toolbar sx={{ pb: 2, pr: 2 }}>
+          <Typography
+            variant="h6"
+            sx={{
+              fontFamily: 'Freda, serif',
+              fontWeight: 800,
+              fontSize: '14px',
+              letterSpacing: '-0.5px',
+              color: '#2B2B2B',
+              mb: 1,
+            }}
+          >
             Treasure Trail
           </Typography>
+          <Divider sx={{ mb: 2, borderColor: '#2F5D50' }} />
         </Toolbar>
-        <List>
+        <List
+          sx={{
+            pb: 2,
+            pr: 2,
+            bgcolor: '#f3f7f5',
+          }}
+        >
           {navItems.map((item) => (
             <ListItem key={item.path} disablePadding>
               <ListItemButton
