@@ -87,9 +87,32 @@ export default function Checkout() {
     return Object.keys(e).length === 0
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  const validatePayment = () => {
+    const e = { ...errors }
+    if (form.paymentMethod === 'upi') {
+      const u = validateUpi(form.upiId)
+      if (u) e.upi = u
+    }
+    if (form.paymentMethod === 'card') {
+      const c = validateCardNumber(form.cardNumber)
+      if (c) e.card = c
+      const ex = validateExpiry(form.expiry)
+      if (ex) e.expiry = ex
+      const v = validateCVV(form.cvv)
+      if (v) e.cvv = v
+    }
+    setErrors(e)
+    return Object.keys(e).length === 0
+  }
+
+  const handleNextStep0 = () => {
     if (!validateStep1()) return
+    setStep(1)
+  }
+
+  const handlePlaceOrder = async (e) => {
+    e.preventDefault()
+    if (!validatePayment()) return
     setLoading(true)
     const orderId = 'TT-' + Math.floor(10000 + Math.random() * 90000)
     const order = {
@@ -131,12 +154,11 @@ export default function Checkout() {
             {step === 0 && (
               <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', borderRadius: 3 }}>
                 <CardContent>
-                  <form onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                  <form onSubmit={handleNextStep0} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                     <TextField
                       label="Full name"
                       value={form.name}
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      onBlur={validateStep1}
                       error={!!errors.name}
                       helperText={errors.name}
                       required
@@ -148,7 +170,6 @@ export default function Checkout() {
                       type="email"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      onBlur={validateStep1}
                       error={!!errors.email}
                       helperText={errors.email}
                       required
@@ -159,7 +180,6 @@ export default function Checkout() {
                       label="Phone (10 digits)"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      onBlur={validateStep1}
                       error={!!errors.phone}
                       helperText={errors.phone}
                       required
@@ -170,7 +190,6 @@ export default function Checkout() {
                       label="Address line 1"
                       value={form.address1}
                       onChange={(e) => setForm({ ...form, address1: e.target.value })}
-                      onBlur={validateStep1}
                       error={!!errors.address1}
                       helperText={errors.address1}
                       required
@@ -184,12 +203,11 @@ export default function Checkout() {
                       fullWidth
                       size="small"
                     />
-                    <Box sx={{ display: 'flex', gap: 2 }}>
+                    <Box sx={{ display: 'flex', gap: 3 }}>
                       <TextField
                         label="City"
                         value={form.city}
                         onChange={(e) => setForm({ ...form, city: e.target.value })}
-                        onBlur={validateStep1}
                         error={!!errors.city}
                         helperText={errors.city}
                         required
@@ -201,7 +219,6 @@ export default function Checkout() {
                         label="State"
                         value={form.state}
                         onChange={(e) => setForm({ ...form, state: e.target.value })}
-                        onBlur={validateStep1}
                         error={!!errors.state}
                         helperText={errors.state}
                         required
@@ -217,7 +234,6 @@ export default function Checkout() {
                       label="PIN code (6 digits)"
                       value={form.pincode}
                       onChange={(e) => setForm({ ...form, pincode: e.target.value })}
-                      onBlur={validateStep1}
                       error={!!errors.pincode}
                       helperText={errors.pincode}
                       required
@@ -238,7 +254,7 @@ export default function Checkout() {
                         '&:hover': { bgcolor: '#274d42' },
                       }}
                     >
-                      {loading ? 'Placing order…' : 'Next: delivery method'}
+                      NEXT
                     </Button>
                   </form>
                 </CardContent>
@@ -267,7 +283,7 @@ export default function Checkout() {
                       />
                     </RadioGroup>
                   </FormControl>
-                  <Box sx={{ display: 'flex', gap: 2 }}>
+                  <Box sx={{ display: 'flex', gap: 3 }}>
                     <Button
                       variant="outlined"
                       onClick={() => setStep(0)}
@@ -280,7 +296,7 @@ export default function Checkout() {
                       onClick={() => setStep(2)}
                       sx={{ borderRadius: '999px', textTransform: 'none', bgcolor: '#2F5D50', color: 'white', flex: 1, '&:hover': { bgcolor: '#274d42' } }}
                     >
-                      Next: payment
+                      NEXT
                     </Button>
                   </Box>
                 </CardContent>
@@ -310,10 +326,6 @@ export default function Checkout() {
                       label="UPI ID"
                       value={form.upiId}
                       onChange={(e) => setForm({ ...form, upiId: e.target.value })}
-                      onBlur={() => {
-                        const err = validateUpi(form.upiId)
-                        setErrors({ ...errors, upi: err })
-                      }}
                       error={!!errors.upi}
                       helperText={errors.upi}
                       required
@@ -323,15 +335,11 @@ export default function Checkout() {
                     />
                   )}
                   {form.paymentMethod === 'card' && (
-                    <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                    <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
                       <TextField
                         label="Card number"
                         value={form.cardNumber}
                         onChange={(e) => setForm({ ...form, cardNumber: e.target.value })}
-                        onBlur={() => {
-                          const err = validateCardNumber(form.cardNumber)
-                          setErrors({ ...errors, card: err })
-                        }}
                         error={!!errors.card}
                         helperText={errors.card}
                         required
@@ -342,10 +350,6 @@ export default function Checkout() {
                         label="Expiry (MM/YY)"
                         value={form.expiry}
                         onChange={(e) => setForm({ ...form, expiry: e.target.value })}
-                        onBlur={() => {
-                          const err = validateExpiry(form.expiry)
-                          setErrors({ ...errors, expiry: err })
-                        }}
                         error={!!errors.expiry}
                         helperText={errors.expiry}
                         required
@@ -357,10 +361,6 @@ export default function Checkout() {
                         type="password"
                         value={form.cvv}
                         onChange={(e) => setForm({ ...form, cvv: e.target.value })}
-                        onBlur={() => {
-                          const err = validateCVV(form.cvv)
-                          setErrors({ ...errors, cvv: err })
-                        }}
                         error={!!errors.cvv}
                         helperText={errors.cvv}
                         required
@@ -369,7 +369,7 @@ export default function Checkout() {
                       />
                     </Box>
                   )}
-                  <Box sx={{ display: 'flex', gap: 2, mt: 3 }}>
+                  <Box sx={{ display: 'flex', gap: 3, mt: 3 }}>
                     <Button
                       variant="outlined"
                       onClick={() => setStep(1)}
@@ -379,11 +379,11 @@ export default function Checkout() {
                     </Button>
                     <Button
                       variant="contained"
-                      onClick={handleSubmit}
+                      onClick={handlePlaceOrder}
                       disabled={loading}
                       sx={{ borderRadius: '999px', textTransform: 'none', bgcolor: '#2F5D50', color: 'white', flex: 1, '&:hover': { bgcolor: '#274d42' } }}
                     >
-                      {loading ? 'Placing order…' : 'Place order'}
+                      NEXT
                     </Button>
                   </Box>
                 </CardContent>
