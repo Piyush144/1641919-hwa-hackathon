@@ -152,19 +152,19 @@ export default function Home() {
       {/* 3. How it works */}
       <Box sx={{ py: 4, px: 2, textAlign: 'center' }}>
         <SectionTitle>How it works</SectionTitle>
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 2, overflowX: 'auto', justifyContent: 'center' }}>
           {HOW_IT_WORKS_STEPS.map((s, i) => (
-            <Grid item xs={12} sm={6} md={4} key={s.title}>
-              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: 240, width: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column', gap:'8px' }}>
+            <Box key={s.title} sx={{ flexShrink: 0, width: 210, minHeight: 200 }}>
+              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', minHeight: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <CardContent sx={{ flexGrow: 1, overflow: 'hidden' }}>
                   <Chip label={`Step ${i + 1}`} size="small" color="secondary" sx={{ mb: 2 }} />
                   <Typography variant="h6" sx={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{s.title}</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{s.text}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word' }}>{s.text}</Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       </Box>
       <DottedLine />
 
