@@ -118,26 +118,15 @@ export default function Home() {
             Find my dog&#39;s level
           </Button>
         </Box>
-        <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50', overflow: 'hidden' }}>
+        <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50', overflowX: 'auto' }}>
           <Typography variant="h6" sx={{ mb: 3, textAlign: 'center' }}>Your dog's trail</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-              <img src="/sniff-maze.svg" alt="Sniff Maze" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
-              <img src="/flap-pocket.svg" alt="Flap Pocket" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-            </Box>
-            <Box sx={{ width: 1, height: 40, bgColor: '#2F5D50', mx: 'auto' }} />
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
-              <img src="/dig-pit.svg" alt="Dig Pit" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
-              <img src="/roll-channel.svg" alt="Roll Channel" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-            </Box>
-            <Box sx={{ width: 1, height: 40, bgColor: '#2F5D50', mx: 'auto' }} />
-            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexDirection: 'row-reverse' }}>
-              <img src="/fringe-forest.svg" alt="Fringe Forest" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
-              <img src="/lift-lid-cup.svg" alt="Lift-Lip Cup" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
-            </Box>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, minWidth: 'max-content' }}>
+            {[['sniff-maze', 'Sniff Maze'], ['flap-pocket', 'Flap Pocket'], ['dig-pit', 'Dig Pit'], ['roll-channel', 'Roll Channel'], ['fringe-forest', 'Fringe Forest'], ['lift-lip-cup', 'Lift-Lip Cup']].map(([id, name], i) => (
+              <Box key={id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 0 }}>
+                <img src={`/${id}.svg`} alt={name} sx={{ width: 48, height: 48, objectFit: 'contain' }} />
+                {i < 5 && <Box sx={{ width: 10, height: 1, bgColor: '#2F5D50' }} />}
+              </Box>
+            ))}
           </Box>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center', maxWidth: 500, mx: 'auto' }}>
             Snap-together silicone tiles wind into a trail&#8212;hide treats, let your dog sniff, dig, and hunt.
@@ -187,9 +176,9 @@ export default function Home() {
       <Box sx={{ py: 4, px: 2 }}>
         <SectionTitle>Meet the tiles</SectionTitle>
         <Container maxWidth="lg">
-          <Grid container spacing={3}>
+          <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
             {TILES.map((tile) => (
-              <Grid item xs={12} sm={6} md={4} key={tile.id}>
+              <Grid item xs={12} md={6} key={tile.id}>
                 <TileCard tile={tile} />
               </Grid>
             ))}
