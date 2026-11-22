@@ -338,7 +338,7 @@ export default function Home() {
 
       {/* 10. Final CTA */}
       <Box sx={{ py: 6, px: 2, textAlign: 'center', bgcolor: '#2F5D50', color: '#FFFFFF' }}>
-        <Typography variant="h4" component="h2" sx={{ fontFamily: 'Freda, serif', mb: 2 }}>
+        <Typography variant="h4" component="h2" sx={{ mb: 2 }}>
           Ready to start the trail?
         </Typography>
         <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>

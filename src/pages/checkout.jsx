@@ -139,7 +139,7 @@ export default function Checkout() {
   return (
     <Box sx={{ bgColor: 'background.default', minHeight: '100vh', py: 4 }}>
       <Container maxWidth="lg">
-        <Typography variant="h6" component="h2" gutterBottom sx={{ fontFamily: 'Freda, serif', mb: 4 }}>
+        <Typography variant="h6" component="h2" gutterBottom sx={{ mb: 4 }}>
           Checkout
         </Typography>
         <Stepper activeStep={step} sx={{ mb: 4 }}>

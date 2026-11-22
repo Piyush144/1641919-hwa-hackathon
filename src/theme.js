@@ -1,10 +1,5 @@
 import { createTheme } from '@mui/material/styles'
 
-const basePalette = {
-  secondary: { main: '#E0A526' },
-  text: { primary: '#2B2B2B', secondary: '#6B6B6B' },
-}
-
 export function createAppTheme(mode = 'light') {
   const isDark = mode === 'dark'
   return createTheme({
@@ -13,7 +8,7 @@ export function createAppTheme(mode = 'light') {
       primary: {
         main: isDark ? '#5C8D84' : '#2F5D50',
       },
-      secondary: basePalette.secondary,
+      secondary: { main: '#E0A526' },
       background: {
         default: isDark ? '#231f1a' : '#F4E9D8',
         paper: isDark ? '#2d2720' : '#FFFFFF',
@@ -25,12 +20,19 @@ export function createAppTheme(mode = 'light') {
     },
     typography: {
       fontFamily: 'Inter, sans-serif',
-      h1: { fontFamily: 'Freda, serif', fontSize: '2.5rem' },
-      h2: { fontFamily: 'Freda, serif', fontSize: '2rem' },
-      h3: { fontFamily: 'Freda, serif', fontSize: '1.75rem' },
-      h4: { fontFamily: 'Freda, serif', fontSize: '1.5rem' },
-      h5: { fontFamily: 'Freda, serif', fontSize: '1.25rem' },
-      h6: { fontFamily: 'Freda, serif', fontSize: '1rem' },
+      h1: { fontSize: '14px', fontWeight: 700 },
+      h2: { fontSize: '14px', fontWeight: 700 },
+      h3: { fontSize: '13px', fontWeight: 600 },
+      h4: { fontSize: '13px', fontWeight: 600 },
+      h5: { fontSize: '13px', fontWeight: 600 },
+      h6: { fontSize: '12px', fontWeight: 600 },
+      body1: { fontSize: '12px' },
+      body2: { fontSize: '12px' },
+      button: { fontSize: '12px', textTransform: 'none', fontWeight: 600 },
+      caption: { fontSize: '12px' },
+      subtitle1: { fontSize: '13px' },
+      subtitle2: { fontSize: '13px' },
+      overline: { fontSize: '12px' },
     },
     shape: { borderRadius: 16 },
     components: {
@@ -39,6 +41,7 @@ export function createAppTheme(mode = 'light') {
           root: {
             textTransform: 'none',
             borderRadius: '999px',
+            fontSize: '12px',
           },
         },
       },
@@ -47,6 +50,7 @@ export function createAppTheme(mode = 'light') {
           body: {
             backgroundColor: isDark ? '#231f1a' : '#F4E9D8',
             color: isDark ? '#e8e2d8' : '#2B2B2B',
+            fontSize: '12px',
           },
         },
       },

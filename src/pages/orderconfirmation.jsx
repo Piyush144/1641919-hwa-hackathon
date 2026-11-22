@@ -64,7 +64,7 @@ export default function OrderConfirmation() {
           <Box sx={{ bgcolor: '#e9f4ea', color: '#2e7d32', borderRadius: '50%', width: 60, height: 60, display: 'flex', alignItems: 'center', justifyContent: 'center', mx: 'auto', mb: 2, fontSize: 32 }}>
             ✓
           </Box>
-          <Typography variant="h4" component="h1" sx={{ fontFamily: 'Freda, serif', mb: 2 }}>
+          <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
             Order placed! Your dog's adventure is on its way.
           </Typography>
           <Typography variant="h6">Order #{order.id}</Typography>

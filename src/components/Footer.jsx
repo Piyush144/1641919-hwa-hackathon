@@ -8,7 +8,7 @@ export default function Footer() {
         <Divider sx={{ borderColor: 'rgba(255,255,255,0.12)', my: 3 }} />
         <Grid container spacing={4}>
           <Grid item xs={12} sm={6} md={4}>
-            <Typography gutterBottom variant="h6" sx={{ fontFamily: 'Freda, serif' }}>
+            <Typography gutterBottom variant="h6" sx={{ fontWeight: 800 }}>
               TreasureTrail
             </Typography>
             <Typography variant="body2" color="textSecondary" paragraph>

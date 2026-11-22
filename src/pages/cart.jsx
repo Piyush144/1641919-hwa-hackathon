@@ -65,7 +65,7 @@ export default function Cart() {
         </Container>
       ) : (
         <Container maxWidth="lg">
-          <Typography variant="h6" component="h2" gutterBottom sx={{ fontFamily: 'Freda, serif', mb: 4 }}>
+          <Typography variant="h6" component="h2" gutterBottom sx={{ mb: 4 }}>
             Your cart ({itemCount})
           </Typography>
           <Box sx={{ display: 'flex', gap: 3, flexWrap: 'wrap' }}>
