@@ -55,14 +55,14 @@ export default function TrailCarousel() {
             <img
               src={`/${item.id}.svg`}
               alt={item.name}
-              sx={{
-                width: 250,
-                height: 250,
-                minWidth: 250,
-                minHeight: 250,
-                borderRadius: 2,
-                filter: i === activeIndex ? 'drop-shadow(0 4px 8px rgba(47,93,80,0.35))' : 'none',
-              }}
+              // sx={{
+              //   width: 250,
+              //   height: 250,
+              //   minWidth: 250,
+              //   minHeight: 250,
+              //   borderRadius: 2,
+              //   filter: i === activeIndex ? 'drop-shadow(0 4px 8px rgba(47,93,80,0.35))' : 'none',
+              // }}
             />
             {i < TRAIL_ITEMS.length - 1 && (
               <Box sx={{ width: 10, height: 1, bgColor: '#2F5D50' }} />
