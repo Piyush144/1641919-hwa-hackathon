@@ -122,7 +122,7 @@ export default function Quiz() {
         <title>${dogName ? dogName + "'s" : "Your"} Hunt Level Card</title>
         <style>
           body { font-family: Inter, sans-serif; padding: 2rem; color: #2B2B2B; }
-          h1 { color: #2F5D50; font-size: 14px; }
+          h1 { font-family: Freda, serif; color: #2F5D50; }
           .card { border: 2px solid #2F5D50; border-radius: 16px; padding: 1.5rem; max-width: 500px; margin: 0 auto; }
           ul { padding-left: 1.2rem; }
           @media print { body { padding: 0; } .card { border: 2px solid #000; } }
@@ -230,7 +230,7 @@ export default function Quiz() {
             </CardContent>
           </Card>
         )}
-        <Typography variant="h6" component="h2" gutterBottom sx={{ mb: 4 }}>
+        <Typography variant="h6" component="h2" gutterBottom sx={{ fontFamily: 'Freda, serif', mb: 4 }}>
           Question {current + 1} of {QUESTIONS.length}
         </Typography>
         <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', borderRadius: 3 }}>

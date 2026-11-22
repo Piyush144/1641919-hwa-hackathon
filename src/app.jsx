@@ -1,6 +1,5 @@
 import React from 'react'
-import { Box, CssBaseline } from '@mui/material'
-import { ThemeProvider } from '@mui/material/styles'
+import { Box } from '@mui/material'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import AnnouncementBar from './components/AnnouncementBar'
 import Navbar from './components/Navbar'
@@ -13,8 +12,6 @@ import Checkout from './pages/checkout'
 import OrderConfirmation from './pages/orderconfirmation'
 import Track from './pages/track'
 import NotFound from './pages/notfound'
-import { createAppTheme } from './theme'
-import { useDarkMode } from './context/DarkModeContext'
 
 const PAGE_TITLES = {
   '/': 'Treasure Trail — Starter Kits',
@@ -35,28 +32,22 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const { mode, toggle } = useDarkMode()
-  const theme = createAppTheme(mode)
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-        <AnnouncementBar />
-        <Navbar toggleDarkMode={toggle} darkMode={mode} />
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/quiz" element={<Quiz />} />
-          <Route path="/how-it-works" element={<HowItWorks />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
-          <Route path="/track" element={<Track />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <Footer />
-      </Box>
-    </ThemeProvider>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <AnnouncementBar />
+      <Navbar />
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/quiz" element={<Quiz />} />
+        <Route path="/how-it-works" element={<HowItWorks />} />
+        <Route path="/cart" element={<Cart />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/order-confirmation/:orderId" element={<OrderConfirmation />} />
+        <Route path="/track" element={<Track />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </Box>
   )
 }

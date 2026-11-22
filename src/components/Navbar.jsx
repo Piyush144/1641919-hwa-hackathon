@@ -12,21 +12,17 @@ import {
   ListItemButton,
   ListItemText,
   Badge,
-  Switch,
-  FormControlLabel,
 } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCart from '@mui/icons-material/ShoppingCart'
 import PawIcon from '@mui/icons-material/Pets'
-import Brightness4Icon from '@mui/icons-material/Brightness4'
-import Brightness7Icon from '@mui/icons-material/Brightness7'
 import { useCart } from '../context/CartContext'
 import { Link as RouterLink } from 'react-router-dom'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 const drawerWidth = 260
 
-export default function Navbar({ toggleDarkMode, darkMode }) {
+export default function Navbar() {
   const { itemCount } = useCart()
   const location = useLocation()
   const navigate = useNavigate()
@@ -55,84 +51,32 @@ export default function Navbar({ toggleDarkMode, darkMode }) {
         position="sticky"
         elevation={0}
         color="inherit"
-        sx={{
-          bgcolor: 'linear-gradient(135deg, #2F5D50 0%, #1a3a32 100%)',
-          boxShadow: '0 4px 20px rgba(47,93,80,0.35)',
-          borderBottom: 'none',
-        }}
+        sx={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E5DDCE' }}
       >
         <Toolbar sx={{ px: 2, minHeight: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          {/* Left side: Hamburger + Logo */}
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <IconButton
-              onClick={handleDrawerToggle}
-              sx={{
-                color: '#FFFFFF',
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' },
-                ml: -0.5,
-              }}
-              edge="start"
-              aria-label="Open menu"
-            >
-              <MenuIcon fontSize="large" />
-            </IconButton>
-            <IconButton
-              component={RouterLink}
-              to="/"
-              size="large"
-              sx={{
-                bgcolor: '#E0A526',
-                p: 1,
-                mr: 0.5,
-                boxShadow: '0 4px 12px rgba(224,165,38,0.4)',
-                '&:hover': { bgcolor: '#d4a01a' },
-              }}
-            >
-              <PawIcon fontSize="large" sx={{ color: '#2B2B2B' }} />
-            </IconButton>
-            <Typography
-              component={RouterLink}
-              to="/"
-              variant="h6"
-              sx={{
-                fontWeight: 800,
-                letterSpacing: '-0.5px',
-                color: '#FFFFFF',
-                textDecoration: 'none',
-                cursor: 'pointer',
-                textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                fontSize: '1.1rem',
-              }}
-            >
-              TreasureTrail
-            </Typography>
+          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+            <Link component={RouterLink} to="/" underline="none" sx={{ color: 'inherit', textDecoration: 'none', fontWeight: 700, fontSize: '1.25rem', letterSpacing: '-0.5px', fontFamily: 'Freda, serif' }}>
+              Treasure Trail
+            </Link>
           </Box>
           <Box sx={{ flexGrow: 1 }} />
-          {/* Right side: Cart + Theme toggle */}
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-            <FormControlLabel
-              control={<Switch size="small" checked={darkMode === 'dark'} onChange={toggleDarkMode} />}
-              label={darkMode === 'dark' ? 'Dark' : 'Light'}
-              labelPlacement="start"
-              sx={{
-                color: '#FFFFFF',
-                ml: 1,
-                mr: 1,
-                '& .MuiFormControlLabel-label': { fontSize: '11px', fontWeight: 700 },
-              }}
-            />
             <IconButton
               component={RouterLink}
               to="/cart"
-              sx={{
-                color: '#FFFFFF',
-                '&:hover': { bgcolor: 'rgba(255,255,255,0.15)' },
-                boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
-              }}
+              sx={{ color: '#2B2B2B', '&:hover': { backgroundColor: 'rgba(47,93,80,0.08)' } }}
             >
               <Badge badgeContent={itemCount > 0 ? itemCount : 0} color="error" sx={{ pl: 1 }}>
                 <ShoppingCart fontSize="large" />
               </Badge>
+            </IconButton>
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{ color: '#2B2B2B', md: 'display:none' }}
+              edge="start"
+              aria-label="Open menu"
+            >
+              <MenuIcon />
             </IconButton>
           </Box>
         </Toolbar>
@@ -144,12 +88,12 @@ export default function Navbar({ toggleDarkMode, darkMode }) {
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box', bgcolor: '#FFFFFF' },
+          [`& .MuiDrawer-paper`]: { width: drawerWidth, boxSizing: 'border-box' },
         }}
       >
         <Toolbar>
-          <Typography variant="h6" sx={{ fontWeight: 800, ml: 2, mr: 'auto', color: '#2B2B2B' }}>
-            TreasureTrail
+          <Typography variant="h6" sx={{ fontFamily: 'Freda, serif', ml: 2, mr: 'auto' }}>
+            Treasure Trail
           </Typography>
         </Toolbar>
         <List>
