@@ -55,7 +55,7 @@ export default function TrailCarousel() {
             <img
               src={`/${item.id}.svg`}
               alt={item.name}
-              sx={{
+              style={{
                 width: 250,
                 height: 250,
                 objectFit:'contain'
