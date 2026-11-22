@@ -120,7 +120,7 @@ export default function Home() {
         </Box>
         <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50', overflowX: 'auto' }}>
           <Typography variant="h6" sx={{ mb: 3, textAlign: 'center' }}>Your dog's trail</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, minWidth: 'max-content' }}>
+          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, justifyContent: 'center', minWidth: 'max-content' }}>
             {[['sniff-maze', 'Sniff Maze'], ['flap-pocket', 'Flap Pocket'], ['dig-pit', 'Dig Pit'], ['roll-channel', 'Roll Channel'], ['fringe-forest', 'Fringe Forest'], ['lift-lip-cup', 'Lift-Lip Cup']].map(([id, name], i) => (
               <Box key={id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 0 }}>
                 <img src={`/${id}.svg`} alt={name} sx={{ width: 48, height: 48, objectFit: 'contain' }} />
