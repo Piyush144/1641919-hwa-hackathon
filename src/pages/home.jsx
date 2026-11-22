@@ -27,6 +27,7 @@ import { TILES } from '../data/tiles'
 import SectionTitle from '../components/SectionTitle'
 import ProductCard from '../components/productCard'
 import TileCard from '../components/TileCard'
+import TrailCarousel from '../components/TrailCarousel'
 import QuantityStepper from '../components/QuantityStepper'
 
 const DottedLine = () => (
@@ -118,16 +119,9 @@ export default function Home() {
             Find my dog&#39;s level
           </Button>
         </Box>
-        <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50', overflowX: 'auto' }}>
-          <Typography variant="h6" sx={{ mb: 3, textAlign: 'center' }}>Your dog's trail</Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 1, justifyContent: 'center', minWidth: 'max-content' }}>
-            {[['sniff-maze', 'Sniff Maze'], ['flap-pocket', 'Flap Pocket'], ['dig-pit', 'Dig Pit'], ['roll-channel', 'Roll Channel'], ['fringe-forest', 'Fringe Forest'], ['lift-lip-cup', 'Lift-Lip Cup']].map(([id, name], i) => (
-              <Box key={id} sx={{ display: 'flex', alignItems: 'center', gap: 0.5, mb: 0 }}>
-                <img src={`/${id}.svg`} alt={name} sx={{ width: 48, height: 48, objectFit: 'contain' }} />
-                {i < 5 && <Box sx={{ width: 10, height: 1, bgColor: '#2F5D50' }} />}
-              </Box>
-            ))}
-          </Box>
+        <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50' }}>
+          <Typography variant="h6" sx={{ mb: 2, textAlign: 'center' }}>Your dog's trail</Typography>
+          <TrailCarousel />
           <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center', maxWidth: 500, mx: 'auto' }}>
             Snap-together silicone tiles wind into a trail&#8212;hide treats, let your dog sniff, dig, and hunt.
           </Typography>
