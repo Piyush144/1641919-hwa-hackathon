@@ -64,7 +64,92 @@ Actions: ADD, REMOVE, SET_QTY (min 1 , max 10), CLEAR, APPLY_COUPON, REMOVE_COUP
 Shipping: standard is free when subtotal after discount is 1999 or more, otherwise 99.epress is 199
 Show the car item count as a Badge on the nabber cart icon
 
+Navbar, announcement bar and footer
 
+Build announcement bar: 
+ Free delivery above Rs 1999. 30-day happy-dog guarantee"
+ Build a sticky nabber: logo text "TreasureTrail" with a paw icon, links home, find my dog's level.
+How it works, and a card iconbutton with a badge. On mobile collapse into a Drawer with a hamburger.
+Highlight the active route. Build footer with columns about, help(FAQ, shipping and returns)
+Contact hello@treasuretrail.example, the tagline "Made fro dogs who love to hunt."
+And "C 2026 treasureTRail (demo store)".
+
+
+Home/Product page
+
+Build pages/Home.jsx with these sections in order:
+
+1. Hero: headline "your dog's daily treasure hunt. Never the same twice,", subheadline "Snap-together silicone tiles and 30 level cards turn mealtime into an hour of sniffing, diffing and problem-solving.
+, buttons "Shop the started kit" (scrolls to #buy) and "Find my dog's level" (links to /quiz). Add a CSS/SVG illustration, not a photo.
+2. Problem: 3 cards (boring in a week/over before you leave hard to clean).
+3. How it works: 3-setp mui stepper or cards(build, hide, hunt)
+4. Meet the tiles: a grid from tiles.js using timecard.
+5 Why it keeps dogs busy: 4 icon feature items.
+6. Buy section(id="buy"): choose dog size (Togglebuttongroup), choose kit (selectable cards with price and contents), and quantity stepper, live prices, "Ado card" button, then a snacker  "Added to car" with a "view Cart" action. Show delivery and returns info below.
+7. Specs in an Accordion, and "Wats in the box" list.
+8. Reviews: 3 cards labelled "Sample reviews".
+9. Safety note in an Alert (severity into).
+10. Final Call to action band
+Use a dotted treasure-trail line between sections as a visual motif.
+
+
+Quiz logic and page
+
+Create src/utils/quizEngine.js exporting generateHund({size, experience, food, duration})
+Rules:
+ - experience first-time -> level1-2, gets the hang of it -> level 3, solves fast => level 4-5.
+ - food kibble -> prefer tiles Roll Channel and Fringe Forest, treat -> prefer List-Lid cup and Flap pocket, mixed -< any
+- Shuffly the layout so "generate another layout" gives a different result each time.
+Return {level, tiles (ordered), hidingSteps[], estimatedMinutes, title}.
+Hiding steps come from each tile's hidingTip
+Build pages.Quiz.jsx: a 4-questions mui stepper from(size, experience, food, duration) with radio-styles cards, Back/Next, progress bar, and validation so Next is disable and until disabled.
+Result Screen; a card with level hip, ordered tile list, hiding steps, estimated time, buttons "generate another layout" and "Add the started kit to cart" (adds the kit in the chosen size and shows a snacker). Add "Start Over".
+
+
+Cart Page
+
+Build pages/Cart,jsx. Empty Stat: illustration, "Your cart is empty. Let's find something for your dog." And a "Shop Now" button. Otherwise, a list of rows (kit name, size, price, quantityStepper, Remove with confirmation) and an order summary card: subtotal, discount, delivery, total. Coupon field with apply button, showing "Code applied: 10% off" or "That code isn't valid", and a way to remove the coupon. Buttons: "Continue shopping" and "Proceed to checkout". On mobile, stack the summary below the list.
+
+
+Checkout
+
+Build pages/checkout.jsx: redirect to  /card if the cart is empty. 
+Use a 3 step mui stepper: delivery details, delivery method, payment (demo).
+Step 1 fields: full name, email, phone (10 digits),  address line 1, address line 2, (optional), cut, state(Indian states), PIN code(6 digits).
+Create src/utls/validators.js and validate on blue and on Next, showing messages: "Please enter your full name." "Enter a valid email id", "Enter a 10-digit phone number.", "Enter a valid 6-digit- code."
+Step 2: radio fro standard (4-6 days) or express (2-3days) with prices.
+Step 3: radios for UPI/Card/COD. For ups show api id field, for card show number/expiry/cvv with basic format validation. Show "this is. demo store. No real payment will be taken."
+Keep a sticky order summary on the side(below the form on mobile)
+"Place order" generates an order id like TT-10482 (random 5 digits), saves the order (item, address, totals, method, date) to localStorage under "orders", clears the cart, show a cart loading state, and navigates to order-confirmation/:orderOd
+
+
+Order confirmation
+
+Build pages/orderconfirmation.jsx. read the order by :orderId from localStorage. If not found, show a friend message with a link home. 
+Show a success icon , "Order places! Your dog's adventure is on its way.", order number, items list, delivery address, estimated delivery date (calculated from today plus 4-6 or 2-3 days), payment methods, and total paid. Add the line "Well email you a tracking link. In the meantime try our Find my dog's level quiz." With buttons "Build Toda's hunt" and continuebshopping
+
+
+How it works page and FAQ
+
+Build pages/howitworks,jsx with sections:
+- "How could be made":manufacture (injection-moulded food-grade silicone, tongue-and-groove edges, recycles card level cards), cost and margin (estimated unit cost Rs. 700 vs price Rs. 2499), why a business could launch it(repeat revenue from expansion packs, low return risk, easy to ship), and a testing plan( chew test, material, test, trail with 20 households).
+- a 3-stage timeline(prototype, testing, launch)
+- FAQ as MUI accordions from faq.js
+- A contact section with a simple form(name, email,, message), validation and a success Snackbar(demo, no backend)
+
+
+Polish, 404 and accessibility
+
+Add pages/Notfound.jsx with a playful "This trail has gone cold" message a button home. 
+Add loading skeletons where relevant, a  page title per route (document.title), alt test and aria-labels on all icons buttons, focus-visible styles, and keyboard support for the selectable cards. Make sure every page works at 360px, 768px and 1280px. 
+Add a subtle mui fad/grow animation on section entry and a hover lift of cards. Respect rprefers-reduced-motion.
+
+Final QA
+
+Review the while app and fix any bugs. Check this flow end to end:
+Home -> choose size and kit => add to cart ->apply trail10->checkout->fill the form wit invalid data (check errors) then valid data ->place order->confirmation
+Also heck: quick -> add to car: refresh the page and confirm the cart persists, tr an empty cart at /checkout: an invalid order id: a very long name quantity limits: mobile menu.
+Make sure no console error or warnings, no dead links or buttons, and that "nam run build " success. List what you fixed
 
 
 
