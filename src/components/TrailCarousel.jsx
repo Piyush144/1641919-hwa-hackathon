@@ -9,7 +9,7 @@ const TRAIL_ITEMS = [
   { id: 'dig-pit', name: 'Dig Pit' },
   { id: 'roll-channel', name: 'Roll Channel' },
   { id: 'fringe-forest', name: 'Fringe Forest' },
-  { id: 'lift-lip-cup', name: 'Lift-Lip Cup' },
+  { id: 'lift-lid-cup', name: 'Lift-Lip Cup' },
 ]
 
 export default function TrailCarousel() {
