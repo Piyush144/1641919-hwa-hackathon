@@ -58,10 +58,7 @@ export default function TrailCarousel() {
               sx={{
                 width: 250,
                 height: 250,
-                minWidth: 250,
-                minHeight: 250,
-                borderRadius: 2,
-                filter: i === activeIndex ? 'drop-shadow(0 4px 8px rgba(47,93,80,0.35))' : 'none',
+                objectFit:'contain'
               }}
             />
             {i < TRAIL_ITEMS.length - 1 && (
