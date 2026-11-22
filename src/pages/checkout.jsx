@@ -164,6 +164,7 @@ export default function Checkout() {
                       required
                       fullWidth
                       size="small"
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                     />
                     <TextField
                       label="Email"
@@ -175,6 +176,7 @@ export default function Checkout() {
                       required
                       fullWidth
                       size="small"
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                     />
                     <TextField
                       label="Phone (10 digits)"
@@ -185,6 +187,7 @@ export default function Checkout() {
                       required
                       fullWidth
                       size="small"
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                     />
                     <TextField
                       label="Address line 1"
@@ -195,6 +198,7 @@ export default function Checkout() {
                       required
                       fullWidth
                       size="small"
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                     />
                     <TextField
                       label="Address line 2 (optional)"
@@ -202,6 +206,7 @@ export default function Checkout() {
                       onChange={(e) => setForm({ ...form, address2: e.target.value })}
                       fullWidth
                       size="small"
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                     />
                     <Box sx={{ display: 'flex', gap: 3 }}>
                       <TextField
@@ -213,6 +218,7 @@ export default function Checkout() {
                         required
                         size="small"
                         sx={{ flex: 1 }}
+                        style = {{ marginTop:"10px", marginBottom:"10px"}}
                       />
                       <TextField
                         select
@@ -224,6 +230,7 @@ export default function Checkout() {
                         required
                         size="small"
                         sx={{ flex: 1 }}
+                        style = {{ marginTop:"10px", marginBottom:"10px"}}
                       >
                         {INDIAN_STATES.map((s) => (
                           <option key={s} value={s}>{s}</option>
@@ -238,6 +245,7 @@ export default function Checkout() {
                       helperText={errors.pincode}
                       required
                       fullWidth
+                      style = {{ marginTop:"10px", marginBottom:"10px"}}
                       size="small"
                     />
                     <Button
