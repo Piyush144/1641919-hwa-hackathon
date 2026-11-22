@@ -53,7 +53,7 @@ const PROBLEM_CARDS = [
 
 const HOW_IT_WORKS_STEPS = [
   { title: 'Build', text: 'Snap the silicone tiles together into any trail shape you like.' },
-  { title: 'Hide', text: 'Tuck kibble or treats into each tile&#39;s pocket, maze, or cup.' },
+  { title: 'Hide', text: 'Tuck kibble or treats into each tile`s pocket, maze, or cup.' },
   { title: 'Hunt', text: 'Let your dog sniff, nudge, and solve to earn every treat.' },
 ]
 
@@ -134,18 +134,18 @@ export default function Home() {
       {/* 2. Problem */}
       <Box sx={{ py: 4, px: 2, bgColor: '#FFFFFF' }}>
         <SectionTitle>The problem with ordinary bowls</SectionTitle>
-        <Grid container spacing={3}>
+        <Box sx={{ display: 'flex', flexWrap: 'nowrap', gap: 2, overflowX: 'auto', justifyContent: 'center' }}>
           {PROBLEM_CARDS.map((c) => (
-            <Grid item xs={12} sm={6} md={4} key={c.title}>
-              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: 240, width: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+            <Box key={c.title} sx={{ flexShrink: 0, width: 210, minHeight: 200 }}>
+              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', minHeight: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                 <CardContent sx={{ flexGrow: 1, overflow: 'hidden' }}>
                   <Typography variant="h6" sx={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{c.title}</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{c.text}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word' }}>{c.text}</Typography>
                 </CardContent>
               </Card>
-            </Grid>
+            </Box>
           ))}
-        </Grid>
+        </Box>
       </Box>
       <DottedLine />
 
