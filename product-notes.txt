@@ -1,0 +1,9 @@
+Treasure Trail - Product Notes
+==============================
+
+Use this file to record how you want the React app to work, look, and how
+the product should behave. Update it as your ideas evolve.
+
+- How the app should work:
+- How the app should look:
+- How the product should work:
