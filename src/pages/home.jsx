@@ -137,10 +137,10 @@ export default function Home() {
         <Grid container spacing={3}>
           {PROBLEM_CARDS.map((c) => (
             <Grid item xs={12} sm={6} md={4} key={c.title}>
-              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: '100%', borderRadius: 3 }}>
-                <CardContent>
-                  <Typography variant="h6">{c.title}</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{c.text}</Typography>
+              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: 240, width: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flexGrow: 1, overflow: 'hidden' }}>
+                  <Typography variant="h6" sx={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{c.title}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{c.text}</Typography>
                 </CardContent>
               </Card>
             </Grid>
@@ -155,11 +155,11 @@ export default function Home() {
         <Grid container spacing={3}>
           {HOW_IT_WORKS_STEPS.map((s, i) => (
             <Grid item xs={12} sm={6} md={4} key={s.title}>
-              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: '100%', borderRadius: 3 }}>
-                <CardContent>
+              <Card sx={{ p: 3, border: '1px solid #E5DDCE', bgcolor: 'background.paper', height: 240, width: '100%', borderRadius: 3, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ flexGrow: 1, overflow: 'hidden' }}>
                   <Chip label={`Step ${i + 1}`} size="small" color="secondary" sx={{ mb: 2 }} />
-                  <Typography variant="h6">{s.title}</Typography>
-                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>{s.text}</Typography>
+                  <Typography variant="h6" sx={{ overflowWrap: 'break-word', wordBreak: 'break-word' }}>{s.title}</Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ mt: 1, overflowWrap: 'break-word', wordBreak: 'break-word', display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{s.text}</Typography>
                 </CardContent>
               </Card>
             </Grid>
