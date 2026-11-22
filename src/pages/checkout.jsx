@@ -17,6 +17,7 @@ import {
   FormControlLabel,
   Link,
   Alert,
+  Divider,
 } from '@mui/material'
 import { useCart } from '../context/CartContext'
 import { formatINR } from '../utils/format'
