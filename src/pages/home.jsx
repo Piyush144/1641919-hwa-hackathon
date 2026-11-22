@@ -118,10 +118,29 @@ export default function Home() {
             Find my dog&#39;s level
           </Button>
         </Box>
-        <Box sx={{ mt: 6, p: 4, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50' }}>
-          <Typography variant="h6" sx={{ mb: 2 }}>🐾 SVG trail illustration placeholder</Typography>
-          <Typography variant="body2" color="text.secondary">
-            A CSS/SVG illustration of connected trail tiles winds across this section.
+        <Box sx={{ mt: 6, p: 3, borderRadius: 3, bgcolor: 'rgba(47,93,80,0.08)', border: '1px dashed #2F5D50', overflow: 'hidden' }}>
+          <Typography variant="h6" sx={{ mb: 3, textAlign: 'center' }}>Your dog's trail</Typography>
+          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+              <img src="/sniff-maze.svg" alt="Sniff Maze" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
+              <img src="/flap-pocket.svg" alt="Flap Pocket" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+            </Box>
+            <Box sx={{ width: 1, height: 40, bgColor: '#2F5D50', mx: 'auto' }} />
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
+              <img src="/dig-pit.svg" alt="Dig Pit" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
+              <img src="/roll-channel.svg" alt="Roll Channel" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+            </Box>
+            <Box sx={{ width: 1, height: 40, bgColor: '#2F5D50', mx: 'auto' }} />
+            <Box sx={{ display: 'flex', gap: 1, alignItems: 'center', flexDirection: 'row-reverse' }}>
+              <img src="/fringe-forest.svg" alt="Fringe Forest" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+              <Box sx={{ width: 16, height: 1, bgColor: '#2F5D50' }} />
+              <img src="/lift-lid-cup.svg" alt="Lift-Lip Cup" sx={{ width: 70, height: 70, objectFit: 'contain' }} />
+            </Box>
+          </Box>
+          <Typography variant="body2" color="text.secondary" sx={{ mt: 2, textAlign: 'center', maxWidth: 500, mx: 'auto' }}>
+            Snap-together silicone tiles wind into a trail&#8212;hide treats, let your dog sniff, dig, and hunt.
           </Typography>
         </Box>
       </Box>
