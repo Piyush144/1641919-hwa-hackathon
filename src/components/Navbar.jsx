@@ -118,7 +118,7 @@ export default function Navbar() {
             sx={{
               fontFamily: 'Freda, serif',
               fontWeight: 800,
-              fontSize: '14px',
+              fontSize: '20px',
               letterSpacing: '-0.5px',
               color: '#2B2B2B',
               mb: 1,
