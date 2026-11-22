@@ -54,7 +54,29 @@ export default function Navbar() {
         sx={{ backgroundColor: '#FFFFFF', borderBottom: '1px solid #E5DDCE' }}
       >
         <Toolbar sx={{ px: 2, minHeight: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center', gap: 1 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <IconButton
+              onClick={handleDrawerToggle}
+              sx={{ color: '#2B2B2B', md: 'display:none' }}
+              edge="start"
+              aria-label="Open menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <IconButton
+              component={RouterLink}
+              to="/"
+              size="large"
+              sx={{
+                bgcolor: '#E0A526',
+                p: 1,
+                mr: 0.5,
+                boxShadow: '0 4px 12px rgba(224,165,38,0.4)',
+                '&:hover': { bgcolor: '#d4a01a' },
+              }}
+            >
+              <PawIcon fontSize="large" sx={{ color: '#2B2B2B' }} />
+            </IconButton>
             <Typography
               component={RouterLink}
               to="/"
@@ -75,14 +97,7 @@ export default function Navbar() {
                 <ShoppingCart fontSize="large" />
               </Badge>
             </IconButton>
-            <IconButton
-              onClick={handleDrawerToggle}
-              sx={{ color: '#2B2B2B', md: 'display:none' }}
-              edge="start"
-              aria-label="Open menu"
-            >
-              <MenuIcon />
-            </IconButton>
+
           </Box>
         </Toolbar>
       </AppBar>
