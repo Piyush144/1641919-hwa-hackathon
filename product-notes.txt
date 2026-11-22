@@ -7,3 +7,79 @@ the product should behave. Update it as your ideas evolve.
 - How the app should work:
 - How the app should look:
 - How the product should work:
+
+Reference: stack, routes and structure
+
+Stack:React 18 + Vite MUI v5 (@mui/material, @mui/icons-material , @emotion/react, @emotion/styled), React Router v6, Context+useReducer for the card, localStorage for persistence
+
+Routes
+
+Path					Page
+/					Home /product page
+/quiz					Find my dog's level(Build today's hunt)
+/how-it-works				How it could be made + FAQ
+/cart					Cart
+/checkout				Checkout
+/order-confirmation/:orderId		Confirmation
+*					404
+
+Folder Structure
+
+Src/
+   main.jsx, app.jsx, theme.js
+   Data/products.js, data/tiles.js, data/faq.js
+   Context/CartContext.jsx
+   Utils/quizEngine.js, utils/Validators.js, utils/formats.js
+   Cpmponents/Navbar.jsx, Footer.jsx, Announcmentbar.jsx, productCard.ksx, TileCard.jsx, QuantityStepper.jsx, OrderSummary.jsx, SectionTitle.jsx, pages.home.jsx, quiz.ksx, cart.ksx, checkout.jsx, orderconfirmation.jsx. notfound.jsx
+
+
+
+
+Step and theme
+
+Creata a bite  + react app called treasure trail using mud v5 and react routes v6. Install: mui/material, @mui/icons-material , @emotion/react, @emotion/styled, react-router-dom
+Create src/theme.js with a custom mui there: primary forest green #2F5D50, secondary gold #E0A526, background default sand #F4E9D8, paper white, text #2B2B2B. Headings use the fond Freda, body uses Inter(load both from google fonts in index.html)
+Rounded corners (borderRadium 16), buttons with no uppercase and pill shape. Wrap the app in theme provider and cssbaseline, and set up browser router with a layout containing announcement bar, nabber,  the routed page and Footer. Create empty placeholder pages for every route in route table, add a scroll top on route change.
+
+Data files
+
+Create src/data/products.js exporting:
+- size: Small ( under 10kg), Medium (10-25kg), Larger(over 25kgs)
+- kits: Started Kit( 6 tiles, 30 cars, bag) 2499: Explorer kits (10tiles, 60 cards, bag) 3999
+ Expansion pack( 4 tiles, 20 cards) 1299, Each has id, name, price, contents[]
+-coupons: {TRAILS10:10} as percent off
+-shipping riles: standard 99 (free above 1999), express 199
+Create src/data/tiles.js with 6 tiles : Flap pocket, sniff maze, dig pit, roll Channel
+Lift-Lip cup, fringe forest. Each has id, name, description, icon( MUI icon name), food: 'kibble' | 'treat'| 'both', and a hidingTip string.
+Create src/data/faq.js with 6 questions/answer pairs:
+How long it keeps a dog busy, it is a chew toy, wet food, dog solves it quickly, how to clean, which size to get
+Add src/utils/format.js with a a formatINR(amount) helper using Intel.NumberFormat en-IN
+
+
+Cart Context
+
+Create src/context/CartContext.jsx with context+ useReducer.
+Cart item: {key, kitId, sizeId, qty}/ Key = kitId + sizeId so the same combination merges.
+Actions: ADD, REMOVE, SET_QTY (min 1 , max 10), CLEAR, APPLY_COUPON, REMOVE_COUPON. Persist cart and coupon in localstroage and load them on start (wrap in try/catch). Expore. A useCart hook with: items, itemCount, subtotal, discount, shipping(method), total(method), addItem, removeITem, setQty, clearCart, applyCoupon(code) -> {ok, message}
+Shipping: standard is free when subtotal after discount is 1999 or more, otherwise 99.epress is 199
+Show the car item count as a Badge on the nabber cart icon
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
